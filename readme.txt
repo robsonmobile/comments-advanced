@@ -1,9 +1,9 @@
 === Comments-advanced ===
 Contributors: webvitaly
-Donate link: http://web-profile.com.ua/donate/
-Tags: comments, comment
+Donate link: http://web-profile.net/donate/
+Tags: comments, comment, meta
 Requires at least: 3.0
-Tested up to: 4.1
+Tested up to: 4.9
 Stable tag: 1.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
@@ -12,9 +12,11 @@ Edit comment's info: post id, parent comment id, user id, author IP, author agen
 
 == Description ==
 
-> [WordPress Pro plugins](http://codecanyon.net/popular_item/by_category?category=wordpress&ref=webvitaly) |
-> [Comments-advanced](http://web-profile.com.ua/wordpress/plugins/comments-advanced/ "Plugin page") |
-> [Donate](http://web-profile.com.ua/donate/ "Support the development")
+> **[Anti-spam Pro](http://codecanyon.net/item/antispam-pro/6491169?ref=webvitalii "Block Comments Spam")** |
+> **[Comments-advanced](http://web-profile.net/wordpress/plugins/comments-advanced/ "Plugin page")** |
+> **[Donate](http://web-profile.net/donate/ "Support the development")** |
+> **[GitHub](https://github.com/webvitalii/comments-advanced "Fork")**
+
 
 Edit comment's info:
 
@@ -26,9 +28,8 @@ Edit comment's info:
 
 
 = Useful: =
-* ["Anti-spam" - block spam in comments](http://wordpress.org/plugins/anti-spam/ "no spam, no captcha")
-* ["Page-list" - show list of pages with shortcodes](http://wordpress.org/plugins/page-list/ "list of pages with shortcodes")
-* [WordPress Pro plugins](http://codecanyon.net/popular_item/by_category?category=wordpress&ref=webvitaly)
+* **[Silver Bullet Pro - Speedup and protect WordPress in a smart way](http://codecanyon.net/item/silver-bullet-pro/15171769?ref=webvitalii "Speedup and protect WordPress in a smart way")**
+* **[Anti-spam Pro - Block spam in comments](http://codecanyon.net/item/antispam-pro/6491169?ref=webvitalii "Block spam in comments")**
 
 
 == Screenshots ==

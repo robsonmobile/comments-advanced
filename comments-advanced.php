@@ -5,7 +5,7 @@ Plugin URI: http://wordpress.org/plugins/comments-advanced/
 Description: Edit comment's info: post id, parent comment id, user id, author IP, author agent.
 Version: 1.1
 Author: webvitaly
-Author URI: http://web-profile.com.ua/wordpress/plugins/
+Author URI: http://web-profile.net/wordpress/plugins/
 License: GPLv3
 */
 
@@ -109,11 +109,15 @@ function comments_advanced_unqprfx_save_meta($comment_ID) {
 add_action('edit_comment', 'comments_advanced_unqprfx_save_meta');
 
 
-function comments_advanced_unqprfx_plugin_meta( $links, $file ) { // add 'Plugin page' and 'Donate' links to plugin meta row
-	if ( strpos( $file, 'comments-advanced.php' ) !== false ) {
-		$links = array_merge( $links, array( '<a href="http://web-profile.com.ua/wordpress/plugins/comments-advanced/" title="Plugin page">Comments-advanced</a>' ) );
-		$links = array_merge( $links, array( '<a href="http://web-profile.com.ua/donate/" title="Support the development">Donate</a>' ) );
+function comments_advanced_unqprfx_plugin_meta( $links, $file ) { // add links to plugin meta row
+	if ( $file == plugin_basename( __FILE__ ) ) {
+		$row_meta = array(
+			'support' => '<a href="http://web-profile.net/wordpress/plugins/comments-advanced/" target="_blank">Comments-advanced</a>',
+			'donate' => '<a href="http://web-profile.net/donate/" target="_blank">Donate</a>',
+			'pro' => '<a href="http://codecanyon.net/item/silver-bullet-pro/15171769?ref=webvitalii" target="_blank" title="Speedup and protect WordPress in a smart way">Silver Bullet Pro</a>'
+		);
+		$links = array_merge( $links, $row_meta );
 	}
-	return $links;
+	return (array) $links;
 }
 add_filter( 'plugin_row_meta', 'comments_advanced_unqprfx_plugin_meta', 10, 2 );
