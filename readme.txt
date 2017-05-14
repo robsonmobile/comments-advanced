@@ -4,11 +4,11 @@ Donate link: http://web-profile.net/donate/
 Tags: comments, comment, meta
 Requires at least: 3.0
 Tested up to: 4.9
-Stable tag: 1.1
+Stable tag: 2.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
-Edit comment's info: post id, parent comment id, user id, author IP, author agent.
+Edit comment's info: Post ID, Parent Comment ID, User ID, Author IP, Author Agent.
 
 == Description ==
 
@@ -20,11 +20,11 @@ Edit comment's info: post id, parent comment id, user id, author IP, author agen
 
 Edit comment's info:
 
-* post id
-* parent comment id
-* user id
-* author IP
-* author agent
+* Post ID
+* Parent Comment ID
+* User ID
+* Author IP
+* Author Agent
 
 
 = Useful: =
@@ -34,17 +34,20 @@ Edit comment's info:
 
 == Screenshots ==
 
-1. comments meta-box
+1. Comment's meta-box
 
 == Changelog ==
 
-= 1.1 - 2012-14-05 =
-* minor changes
+= 2.0 - 2017-05-13 =
+* Added dropdown for choosing Post ID
+
+= 1.1 - 2012-05-14 =
+* Minor changes
 
 = 1.0 =
-* initial release
+* Initial release
 
 == Installation ==
 
-1. install and activate the plugin on the Plugins page
-2. edit comments info
+1. Install and activate the plugin on the Plugins page
+2. Edit comment's info
