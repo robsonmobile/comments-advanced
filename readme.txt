@@ -38,9 +38,10 @@ Edit comment's info:
 
 == Changelog ==
 
-= 2.0 - 2017-05-13 =
+= 2.0 - 2017-05-14 =
 * Added dropdown for choosing Post
 * Added dropdown for choosing Parent Comment
+* Added dropdown for choosing Comment Author
 
 = 1.1 - 2012-05-14 =
 * Minor changes

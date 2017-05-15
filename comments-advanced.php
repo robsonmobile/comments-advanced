@@ -67,23 +67,23 @@ function comments_advanced_unqprfx_meta() {
 		'comment_approved' => 1 
 	) );
 
-	foreach ( $comments_list as $commentp ) {
-		if ( $commentp->comment_ID != $comment->comment_ID && $commentp->comment_ID < $comment->comment_ID ) { // hide himself and later
+	foreach ( $comments_list as $comment_item ) {
+		if ( $comment_item->comment_ID != $comment->comment_ID && $comment_item->comment_ID < $comment->comment_ID ) { // hide himself and later
 			$selected = '';
-			if ( $commentp->comment_ID == $comment->comment_parent ) {
+			if ( $comment_item->comment_ID == $comment->comment_parent ) {
 				$selected = ' selected="selected"';
 			}
 			
-			$comment_content = trim( wp_strip_all_tags( $commentp->comment_content ) );
+			$comment_content = trim( wp_strip_all_tags( $comment_item->comment_content ) );
 			if( empty( $comment_content ) ) {
 				$comment_content = '[Empty comment]';
 			}
 			
 			if (mb_strlen($comment_content) > 50) {
-				$comment_content = mb_substr(wp_strip_all_tags($commentp->comment_content), 0, 50, 'UTF-8') . '...';
+				$comment_content = mb_substr(wp_strip_all_tags($comment_item->comment_content), 0, 50, 'UTF-8') . '...';
 			}
-			$html .= '<option value="'.esc_attr($commentp->comment_ID).'"' . $selected . '>';
-			$html .= '['.$commentp->comment_ID.'] ['.$commentp->comment_author.'] '.$comment_content.'</option>';
+			$html .= '<option value="'.esc_attr($comment_item->comment_ID).'"' . $selected . '>';
+			$html .= '['.$comment_item->comment_ID.'] ['.$comment_item->comment_author.'] '.$comment_content.'</option>';
 		}
 	}
 ?>
@@ -99,7 +99,33 @@ function comments_advanced_unqprfx_meta() {
 			<label for="comment_user_id">User ID</label>
 		</td>
 		<td>
-			<input type="text" name="comment_user_id" id="comment_user_id" value="<?php echo esc_attr( $comment->user_id ); ?>" size="40" />
+<?php
+	$html = '';
+	$users_list = $wpdb->get_results( "SELECT " . $wpdb->prefix . "users.ID, " . $wpdb->prefix . "users.display_name, " . $wpdb->prefix . "usermeta.meta_value FROM " . $wpdb->prefix . "users
+	 JOIN " . $wpdb->prefix . "usermeta ON " . $wpdb->prefix . "users.ID = " . $wpdb->prefix . "usermeta.user_id WHERE " . $wpdb->prefix . "usermeta.meta_key = 'wp_capabilities'
+	 ORDER BY " . $wpdb->prefix . "users.ID;", ARRAY_A );
+	
+	foreach ( $users_list as $user_item ) {
+		$selected = '';
+		if ( $user_item['ID'] == $comment->user_id ) {
+			$selected = ' selected="selected"';
+		}
+		
+		$user_role = '';
+		$user_role_array = unserialize($user_item['meta_value']);
+		foreach($user_role_array AS $key => $item) {
+			$user_role = $key;
+		}
+		
+		$html .= '<option value="'.esc_attr($user_item['ID']).'"'.$selected.'>';
+		$html .= '['.$user_item['ID'].'] ['.$user_role.'] '.$user_item['display_name'].'</option>';
+	}
+?>
+			<select name="comment_user_id" id="comment_user_id">
+				<option value='0'>[0] [Without role] Guest</option>
+				<?php echo $html; ?>
+			</select>
+			<div>Legend: [User ID] [User Role] Username</div>
 		</td>
 	</tr>
 	<tr>
