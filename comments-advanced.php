@@ -2,7 +2,7 @@
 /*
 Plugin Name: Comments-advanced
 Plugin URI: http://wordpress.org/plugins/comments-advanced/
-Description: Edit comment's info: post id, parent comment id, user id, author IP, author agent.
+Description: Edit comment's info: Post ID, Parent Comment ID, User ID, Author IP, Author Agent and Comment Date.
 Version: 2.0
 Author: webvitaly
 Author URI: http://web-profile.net/wordpress/plugins/
@@ -144,6 +144,14 @@ function comments_advanced_unqprfx_meta() {
 			<input type="text" name="comment_agent" id="comment_agent" value="<?php echo esc_attr( $comment->comment_agent ); ?>" size="40" />
 		</td>
 	</tr>
+	<tr>
+		<td class="textright">
+			<label for="comment_date">Comment Date</label>
+		</td>
+		<td>
+			<input type="text" name="comment_date" id="comment_date" value="<?php echo esc_attr( $comment->comment_date ); ?>" size="40" />
+		</td>
+	</tr>
 </tbody>
 </table>
 
@@ -159,6 +167,7 @@ function comments_advanced_unqprfx_save_meta($comment_ID) {
 	$user_id = absint( $_POST['comment_user_id'] );
 	$comment_author_IP = esc_attr( $_POST['comment_author_ip'] );
 	$comment_agent = esc_attr( $_POST['comment_agent'] );
+	$comment_date = esc_attr( $_POST['comment_date'] );
 
 	if ($comment_parent == $comment_ID) { // comment parent cannot be self
 		return false; // don't update
@@ -172,6 +181,12 @@ function comments_advanced_unqprfx_save_meta($comment_ID) {
 	$comment_row = $wpdb->get_row( $wpdb->prepare( "select * from $wpdb->comments where comment_ID = %s", $comment_ID ) );
 	$old_comment_post_ID = $comment_row->comment_post_ID; // get old comment_post_ID
 
+	if( $old_comment_post_ID != $comment_post_ID ){ // if comment_post_ID was updated
+		wp_update_comment_count( $old_comment_post_ID ); // we need to update comment counts for both posts (old and new)
+		wp_update_comment_count( $comment_post_ID );
+		$comment_parent = "0"; // reset comment_parent if comment was moved to another post
+	}
+	
 	$wpdb->update(
 		$wpdb->comments,
 		array(
@@ -179,16 +194,11 @@ function comments_advanced_unqprfx_save_meta($comment_ID) {
 			'comment_parent' => $comment_parent,
 			'user_id' => $user_id,
 			'comment_author_IP' => $comment_author_IP,
-			'comment_agent' => $comment_agent
+			'comment_agent' => $comment_agent,
+			'comment_date' => $comment_date
 		),
 		array( 'comment_ID' => $comment_ID )
 	);
-
-	if( $old_comment_post_ID != $comment_post_ID ){ // if comment_post_ID was updated
-		wp_update_comment_count( $old_comment_post_ID ); // we need to update comment counts for both posts (old and new)
-		wp_update_comment_count( $comment_post_ID );
-	}
-
 }
 add_action('edit_comment', 'comments_advanced_unqprfx_save_meta');
 

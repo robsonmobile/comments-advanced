@@ -8,7 +8,7 @@ Stable tag: 2.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
-Edit comment's info: Post ID, Parent Comment ID, User ID, Author IP, Author Agent.
+Edit comment's info: Post ID, Parent Comment ID, User ID, Author IP, Author Agent and Comment Date.
 
 == Description ==
 
@@ -25,6 +25,7 @@ Edit comment's info:
 * User ID
 * Author IP
 * Author Agent
+* Comment Date
 
 
 = Useful: =
@@ -42,6 +43,7 @@ Edit comment's info:
 * Added dropdown for choosing Post
 * Added dropdown for choosing Parent Comment
 * Added dropdown for choosing Comment Author
+* Added input for updating Comment Date
 
 = 1.1 - 2012-05-14 =
 * Minor changes
