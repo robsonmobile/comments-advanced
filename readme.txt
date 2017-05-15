@@ -40,10 +40,10 @@ Edit comment's info:
 == Changelog ==
 
 = 2.0 - 2017-05-14 =
-* Added dropdown for choosing Post
-* Added dropdown for choosing Parent Comment
-* Added dropdown for choosing Comment Author
-* Added input for updating Comment Date
+* Added dropdown for choosing Post - thanks to [Monter](https://github.com/Monter/comments-advanced-mnt)
+* Added dropdown for choosing Parent Comment - thanks to [Monter](https://github.com/Monter/comments-advanced-mnt)
+* Added dropdown for choosing Comment Author - thanks to [Monter](https://github.com/Monter/comments-advanced-mnt)
+* Added input for updating Comment Date - thanks to [Monter](https://github.com/Monter/comments-advanced-mnt)
 
 = 1.1 - 2012-05-14 =
 * Minor changes
