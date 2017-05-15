@@ -39,7 +39,8 @@ Edit comment's info:
 == Changelog ==
 
 = 2.0 - 2017-05-13 =
-* Added dropdown for choosing Post ID
+* Added dropdown for choosing Post
+* Added dropdown for choosing Parent Comment
 
 = 1.1 - 2012-05-14 =
 * Minor changes

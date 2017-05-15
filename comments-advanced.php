@@ -27,25 +27,32 @@ function comments_advanced_unqprfx_meta() {
 		<td>
 <?php
 	$html = '';
-	$posts_data = $wpdb->get_results( "SELECT `ID`, `post_title` FROM `" . $wpdb->prefix . "posts` WHERE `post_status` = 'publish' AND ( `post_type` = 'post' OR `post_type` = 'page' ) ORDER BY `ID` DESC;", ARRAY_A );
-	if ( ! empty( $posts_data ) ) {
-		foreach ( $posts_data as $post ) {
-			$selected = ( ! empty( $comment->comment_post_ID ) && $post['ID'] == $comment->comment_post_ID ) ? ' selected="selected"' : '';
-			$post['post_title'] = str_replace('&#8230;', '...', $post['post_title']);
-			$post_title  = ( empty( $post['post_title'] ) ) ? ' [empty title] ' : $post['post_title'] ;
-			if (mb_strlen($post['post_title']) > 70) {
-				$item_title_stripped = mb_substr(wp_strip_all_tags($post_title), 0, 70, 'UTF-8').'...';
-			} else {
-				$item_title_stripped = wp_strip_all_tags($post_title);
+	$posts_list = $wpdb->get_results( "SELECT `ID`, `post_title` FROM `" . $wpdb->prefix . "posts` WHERE `post_status` = 'publish' AND ( `post_type` = 'post' OR `post_type` = 'page' ) ORDER BY `ID` DESC;", ARRAY_A );
+	if ( ! empty( $posts_list ) ) {
+		foreach ( $posts_list as $post ) {
+			$selected = '';
+			if ( ! empty( $comment->comment_post_ID ) && $post['ID'] == $comment->comment_post_ID ) {
+				$selected = ' selected="selected"';
 			}
-			$html .= '<option value="' . esc_attr($post['ID']) . '"' . $selected . '>[' . $post['ID'] . '] ' . $item_title_stripped . '</option>';
+			
+			$post_title = trim( wp_strip_all_tags( $post['post_title'] ) );
+			if( empty( $post_title ) ) {
+				$post_title = '[Empty title]';
+			}
+			
+			if (mb_strlen($post_title) > 50) {
+				$post_title = mb_substr($post_title, 0, 50, 'UTF-8').'...';
+			}
+			$html .= '<option value="' . esc_attr($post['ID']) . '"' . $selected . '>[' . $post['ID'] . '] ' . $post_title . '</option>';
 		}
 	} else { // No posts found
 		$html = '<option>No posts found</option>';
 	}
-	$html = '<select name="comment_post_id" id="comment_post_id">'.$html.'</select>';
-	echo $html;
 ?>
+			<select name="comment_post_id" id="comment_post_id">
+				<?php echo $html; ?>
+			</select>
+			<div>Legend: [Post ID] Post title</div>
 		</td>
 	</tr>
 	<tr>
@@ -53,7 +60,38 @@ function comments_advanced_unqprfx_meta() {
 			<label for="comment_parent">Parent Comment ID</label>
 		</td>
 		<td>
-			<input type="text" name="comment_parent" id="comment_parent" value="<?php echo esc_attr( $comment->comment_parent ); ?>" size="40" />
+<?php
+	$html = '';
+	$comments_list = get_comments( array( 
+		'post_id' => $comment->comment_post_ID, 
+		'comment_approved' => 1 
+	) );
+
+	foreach ( $comments_list as $commentp ) {
+		if ( $commentp->comment_ID != $comment->comment_ID && $commentp->comment_ID < $comment->comment_ID ) { // hide himself and later
+			$selected = '';
+			if ( $commentp->comment_ID == $comment->comment_parent ) {
+				$selected = ' selected="selected"';
+			}
+			
+			$comment_content = trim( wp_strip_all_tags( $commentp->comment_content ) );
+			if( empty( $comment_content ) ) {
+				$comment_content = '[Empty comment]';
+			}
+			
+			if (mb_strlen($comment_content) > 50) {
+				$comment_content = mb_substr(wp_strip_all_tags($commentp->comment_content), 0, 50, 'UTF-8') . '...';
+			}
+			$html .= '<option value="'.esc_attr($commentp->comment_ID).'"' . $selected . '>';
+			$html .= '['.$commentp->comment_ID.'] ['.$commentp->comment_author.'] '.$comment_content.'</option>';
+		}
+	}
+?>
+			<select name="comment_parent" id="comment_parent">
+				<option value='0'>[0] [Without parent comment]</option>
+				<?php echo $html; ?>
+			</select>
+			<div>Legend: [Comment ID] [Comment Author] Comment content</div>
 		</td>
 	</tr>
 	<tr class="alternate">
